@@ -19,7 +19,7 @@ namespace StockAnalyzer
     public partial class Form1 : Form
     {
 
-        DataTable stockValues = new DataTable();
+        DataTable stockValues = new DataTable(); // datatable to hold stock value for display
         public Form1()
         {
             InitializeComponent();
@@ -65,6 +65,7 @@ namespace StockAnalyzer
                 {
                     
                     stockValues.Rows.Clear();
+                    stockValues.Columns.Clear();
                     stockValues.Columns.Add("Date");
                     stockValues.Columns.Add("Open");
                     stockValues.Columns.Add("High");
@@ -95,8 +96,8 @@ namespace StockAnalyzer
             {
                 MessageBox.Show("Invalid ticker name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
             }
-            
-        }
+
+}
 
         private void radioButtonChooseChart_CheckedChanged(object sender, EventArgs e)
         {
@@ -128,7 +129,6 @@ namespace StockAnalyzer
 
         public long countLines(FileInfo file) /// Reads in a FileInfo object and returns the number of lines in the file
         {
-
             long lineCount = 0;
             using (StreamReader reader = new StreamReader(file.FullName))
             {

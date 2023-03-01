@@ -17,30 +17,31 @@ namespace StockAnalyzer
         DateTime startDate; // starting date from
         DateTime endDate;
         FileInfo stockFile;
-
+        List<Candlestick> candlesticks;
         public CandlestickReader(DateTime startDate, DateTime endDate, string filePath)
         {
             this.startDate = startDate;
             this.endDate = endDate;
             this.stockFile = new FileInfo(filePath);
-        }
-        public void populateDataTable(DataTable dataTable)
-        {
-            using (var reader = new StreamReader(stockFile.FullName)) // using csvhelper to process stock csv file
+
+            using (var reader = new StreamReader(stockFile.FullName))
             {
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
-                    var records = csv.GetRecords<Candlestick>().ToList(); // stores data for each line in csv as a list
-                    foreach (var record in records) // reads through lines from 
-                    {
-                        var date = record.Date;
-                        if (date >= startDate && date <= endDate)
-                        {
-                            dataTable.Rows.Add(record.Date, record.Open, record.High, record.Low, record.Close, record.Volume);
-                        }
-                    }
+                    candlesticks = csv.GetRecords<Candlestick>().ToList();
                 }
+            }
+        }
 
+        public void populateDataTable(DataTable dataTable)
+        {
+            foreach (var candlestick in candlesticks)
+            {  // reads through lines from 
+                var date = candlestick.Date;
+                if (date >= startDate && date <= endDate)
+                {
+                    dataTable.Rows.Add(candlestick.Date, candlestick.Open, candlestick.High, candlestick.Low, candlestick.Close, candlestick.Volume);
+                }
             }
         }
     }
