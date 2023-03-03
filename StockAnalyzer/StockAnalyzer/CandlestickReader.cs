@@ -35,7 +35,10 @@ namespace StockAnalyzer
             }
         }
 
-        public void populateDataTable(DataTable dataTable) // populates a data table with data from candlesticks list
+        /// <summary>
+        /// Populates a data table with data from candlesticks list
+        /// </summary>
+        public void populateDataTable(DataTable dataTable) 
         {
             foreach (var candlestick in candlesticks)
             {  // reads through lines from 
@@ -47,7 +50,10 @@ namespace StockAnalyzer
             }
         }
 
-        public void populateChart(Chart chart) // populates a chart with data from candlesticks list
+        /// <summary>
+        /// Populates a chart with data from candlesticks list
+        /// </summary>
+        public void populateChart(Chart chart) // 
         {
             ArrayList dataSource = new ArrayList();
 
