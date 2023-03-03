@@ -54,8 +54,8 @@ namespace StockAnalyzer
 
             string fileName = textBoxTickerSelect.Text.ToUpper(); // gets text from textbox for ticker
 
-            //try
-            //{
+            try
+            {
                 string filePath = dataFolder + @"\" + textBoxTickerSelect.Text + "-" + timePeriod + ".csv"; // Path to csv file
                 var file = new FileInfo(filePath); // FileInfo object to csv file
 
@@ -87,11 +87,11 @@ namespace StockAnalyzer
                     reader.populateChart(chartStockDisplay); // populates chartStockDisplay with values from stock csv file
                 }
                 dataGridViewStockDisplay.DataSource = stockValues;
-            //}
-            //catch (Exception) // Shows error message if ticker text box contains invalid ticker name
-            //{
-            //    MessageBox.Show("Invalid ticker name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
-            //}
+            }
+            catch (Exception) // Shows error message if ticker text box contains invalid ticker name
+            {
+                MessageBox.Show("Invalid ticker name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+            }
 
 }
 
