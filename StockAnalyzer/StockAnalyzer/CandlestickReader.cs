@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Data;
@@ -9,15 +10,16 @@ using CsvHelper;
 using System.Globalization;
 using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace StockAnalyzer
 {
-    internal class CandlestickReader
+    internal class CandlestickReader  // class for handling reading and processing candlestick data
     {
-        DateTime startDate; // starting date from
-        DateTime endDate;
-        FileInfo stockFile;
-        List<Candlestick> candlesticks;
+        DateTime startDate; // starting date from datetime selector
+        DateTime endDate; // ending date from datetime selector
+        FileInfo stockFile; // FileInfo object for csv stock file
+        List<Candlestick> candlesticks; // list of candlesticks 
         public CandlestickReader(DateTime startDate, DateTime endDate, string filePath)
         {
             this.startDate = startDate;
@@ -33,7 +35,7 @@ namespace StockAnalyzer
             }
         }
 
-        public void populateDataTable(DataTable dataTable)
+        public void populateDataTable(DataTable dataTable) // populates a data table with data from candlesticks list
         {
             foreach (var candlestick in candlesticks)
             {  // reads through lines from 
@@ -43,6 +45,29 @@ namespace StockAnalyzer
                     dataTable.Rows.Add(candlestick.Date, candlestick.Open, candlestick.High, candlestick.Low, candlestick.Close, candlestick.Volume);
                 }
             }
+        }
+
+        public void populateChart(Chart chart) // populates a chart with data from candlesticks list
+        {
+            ArrayList dataSource = new ArrayList();
+
+            foreach (var candlestick in candlesticks)
+            {
+                var date = candlestick.Date;
+                if (date >= startDate && date <= endDate)
+                {
+                    dataSource.Add(candlestick);
+                }
+            }
+
+            chart.Series["Series1"].XValueMember = "Date";
+            chart.Series["Series1"].YValueMembers = "Open, High, Low, Close";
+            chart.Series["Series1"].CustomProperties = "PriceDownColor=red,PriceUpColor=green";
+            chart.DataManipulator.IsStartFromFirst = true;
+            chart.Series["Series1"]["ShowOpenClose"] = "Both";
+
+            chart.DataSource = dataSource;
+            chart.DataBind();
         }
     }
 }

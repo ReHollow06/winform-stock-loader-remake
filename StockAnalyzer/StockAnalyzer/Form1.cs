@@ -12,6 +12,7 @@ using CsvHelper;
 using System.Globalization;
 using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
+using System.Windows.Forms.DataVisualization.Charting;
 
 
 namespace StockAnalyzer
@@ -53,13 +54,13 @@ namespace StockAnalyzer
 
             string fileName = textBoxTickerSelect.Text.ToUpper(); // gets text from textbox for ticker
 
-            try
-            {
+            //try
+            //{
                 string filePath = dataFolder + @"\" + textBoxTickerSelect.Text + "-" + timePeriod + ".csv"; // Path to csv file
                 var file = new FileInfo(filePath); // FileInfo object to csv file
 
                 
-                string[] lines = System.IO.File.ReadAllLines(filePath);
+                string[] lines = File.ReadAllLines(filePath);
 
                 if (lines[0].ToLower() == "\"date\",\"open\",\"high\",\"low\",\"close\",\"volume\"") // initialise columns
                 {
@@ -74,12 +75,6 @@ namespace StockAnalyzer
                     stockValues.Columns.Add("Volume");
                 }
 
-                //for (long i = 1; i < countLines(file); i++) // add all rows from csv file
-                //{
-                //    string[] lineToAdd = lines[i].Split(',');
-
-                //    stockValues.Rows.Add(lineToAdd);
-                //}
                 if (endDate <= startDate)
                 {
                     MessageBox.Show("End date behind start date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -89,26 +84,24 @@ namespace StockAnalyzer
                 {
                     CandlestickReader reader = new CandlestickReader(startDate, endDate, filePath); // instantiates candlestick reader object
                     reader.populateDataTable(stockValues); // populates data table Stock Values with values from stock csv file
+                    reader.populateChart(chartStockDisplay); // populates chartStockDisplay with values from stock csv file
                 }
                 dataGridViewStockDisplay.DataSource = stockValues;
-            }
-            catch (Exception) // Shows error message if ticker text box contains invalid ticker name
-            {
-                MessageBox.Show("Invalid ticker name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
-            }
+            //}
+            //catch (Exception) // Shows error message if ticker text box contains invalid ticker name
+            //{
+            //    MessageBox.Show("Invalid ticker name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+            //}
 
 }
 
         private void radioButtonChooseChart_CheckedChanged(object sender, EventArgs e)
         {
-            chartStockDisplay.Visible = true;
-            dataGridViewStockDisplay.Visible = false;
+
         }
 
         private void radioButtonChooseGridView_CheckedChanged(object sender, EventArgs e)
         {
-            chartStockDisplay.Visible = false;
-            dataGridViewStockDisplay.Visible = true;
 
         }
 
@@ -139,6 +132,11 @@ namespace StockAnalyzer
             }
 
             return lineCount;
+        }
+
+        private void labelEndDate_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

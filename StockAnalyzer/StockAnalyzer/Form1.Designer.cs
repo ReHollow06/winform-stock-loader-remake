@@ -28,17 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chartStockDisplay = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.groupBoxPeriod = new System.Windows.Forms.GroupBox();
             this.radioButtonMonthly = new System.Windows.Forms.RadioButton();
             this.radioButtonWeekly = new System.Windows.Forms.RadioButton();
             this.radioButtonDaily = new System.Windows.Forms.RadioButton();
-            this.groupBoxChooseDisplay = new System.Windows.Forms.GroupBox();
-            this.radioButtonChooseGridView = new System.Windows.Forms.RadioButton();
-            this.radioButtonChooseChart = new System.Windows.Forms.RadioButton();
             this.dataGridViewStockDisplay = new System.Windows.Forms.DataGridView();
             this.labelTickerSelect = new System.Windows.Forms.Label();
             this.textBoxTickerSelect = new System.Windows.Forms.TextBox();
@@ -49,23 +46,24 @@
             this.dateTimePickerEndDate = new System.Windows.Forms.DateTimePicker();
             ((System.ComponentModel.ISupportInitialize)(this.chartStockDisplay)).BeginInit();
             this.groupBoxPeriod.SuspendLayout();
-            this.groupBoxChooseDisplay.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStockDisplay)).BeginInit();
             this.SuspendLayout();
             // 
             // chartStockDisplay
             // 
-            chartArea2.Name = "ChartArea1";
-            this.chartStockDisplay.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chartStockDisplay.Legends.Add(legend2);
-            this.chartStockDisplay.Location = new System.Drawing.Point(12, 12);
+            chartArea1.Name = "ChartArea1";
+            this.chartStockDisplay.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartStockDisplay.Legends.Add(legend1);
+            this.chartStockDisplay.Location = new System.Drawing.Point(345, 306);
             this.chartStockDisplay.Name = "chartStockDisplay";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chartStockDisplay.Series.Add(series2);
-            this.chartStockDisplay.Size = new System.Drawing.Size(433, 288);
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Candlestick;
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            series1.YValuesPerPoint = 4;
+            this.chartStockDisplay.Series.Add(series1);
+            this.chartStockDisplay.Size = new System.Drawing.Size(700, 432);
             this.chartStockDisplay.TabIndex = 0;
             this.chartStockDisplay.Text = "chartStockDisplay";
             this.chartStockDisplay.Click += new System.EventHandler(this.chartStockDisplay_Click);
@@ -117,57 +115,20 @@
             this.radioButtonDaily.UseVisualStyleBackColor = true;
             this.radioButtonDaily.CheckedChanged += new System.EventHandler(this.radioButtonDaily_CheckedChanged);
             // 
-            // groupBoxChooseDisplay
-            // 
-            this.groupBoxChooseDisplay.Controls.Add(this.radioButtonChooseGridView);
-            this.groupBoxChooseDisplay.Controls.Add(this.radioButtonChooseChart);
-            this.groupBoxChooseDisplay.Location = new System.Drawing.Point(207, 462);
-            this.groupBoxChooseDisplay.Name = "groupBoxChooseDisplay";
-            this.groupBoxChooseDisplay.Size = new System.Drawing.Size(238, 48);
-            this.groupBoxChooseDisplay.TabIndex = 2;
-            this.groupBoxChooseDisplay.TabStop = false;
-            this.groupBoxChooseDisplay.Text = "Display";
-            // 
-            // radioButtonChooseGridView
-            // 
-            this.radioButtonChooseGridView.AutoSize = true;
-            this.radioButtonChooseGridView.Location = new System.Drawing.Point(80, 19);
-            this.radioButtonChooseGridView.Name = "radioButtonChooseGridView";
-            this.radioButtonChooseGridView.Size = new System.Drawing.Size(82, 20);
-            this.radioButtonChooseGridView.TabIndex = 1;
-            this.radioButtonChooseGridView.TabStop = true;
-            this.radioButtonChooseGridView.Text = "GridView";
-            this.radioButtonChooseGridView.UseVisualStyleBackColor = true;
-            this.radioButtonChooseGridView.CheckedChanged += new System.EventHandler(this.radioButtonChooseGridView_CheckedChanged);
-            // 
-            // radioButtonChooseChart
-            // 
-            this.radioButtonChooseChart.AutoSize = true;
-            this.radioButtonChooseChart.Checked = true;
-            this.radioButtonChooseChart.Location = new System.Drawing.Point(6, 19);
-            this.radioButtonChooseChart.Name = "radioButtonChooseChart";
-            this.radioButtonChooseChart.Size = new System.Drawing.Size(59, 20);
-            this.radioButtonChooseChart.TabIndex = 0;
-            this.radioButtonChooseChart.TabStop = true;
-            this.radioButtonChooseChart.Text = "Chart";
-            this.radioButtonChooseChart.UseVisualStyleBackColor = true;
-            this.radioButtonChooseChart.CheckedChanged += new System.EventHandler(this.radioButtonChooseChart_CheckedChanged);
-            // 
             // dataGridViewStockDisplay
             // 
             this.dataGridViewStockDisplay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewStockDisplay.Location = new System.Drawing.Point(451, 12);
+            this.dataGridViewStockDisplay.Location = new System.Drawing.Point(33, 12);
             this.dataGridViewStockDisplay.Name = "dataGridViewStockDisplay";
             this.dataGridViewStockDisplay.RowHeadersWidth = 51;
             this.dataGridViewStockDisplay.RowTemplate.Height = 24;
-            this.dataGridViewStockDisplay.Size = new System.Drawing.Size(435, 288);
+            this.dataGridViewStockDisplay.Size = new System.Drawing.Size(1012, 288);
             this.dataGridViewStockDisplay.TabIndex = 3;
-            this.dataGridViewStockDisplay.Visible = false;
             // 
             // labelTickerSelect
             // 
             this.labelTickerSelect.AutoSize = true;
-            this.labelTickerSelect.Location = new System.Drawing.Point(204, 388);
+            this.labelTickerSelect.Location = new System.Drawing.Point(12, 356);
             this.labelTickerSelect.Name = "labelTickerSelect";
             this.labelTickerSelect.Size = new System.Drawing.Size(51, 16);
             this.labelTickerSelect.TabIndex = 4;
@@ -175,7 +136,7 @@
             // 
             // textBoxTickerSelect
             // 
-            this.textBoxTickerSelect.Location = new System.Drawing.Point(269, 385);
+            this.textBoxTickerSelect.Location = new System.Drawing.Point(69, 353);
             this.textBoxTickerSelect.Name = "textBoxTickerSelect";
             this.textBoxTickerSelect.Size = new System.Drawing.Size(121, 22);
             this.textBoxTickerSelect.TabIndex = 5;
@@ -183,9 +144,9 @@
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(523, 481);
+            this.buttonLoad.Location = new System.Drawing.Point(18, 610);
             this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(138, 61);
+            this.buttonLoad.Size = new System.Drawing.Size(164, 78);
             this.buttonLoad.TabIndex = 6;
             this.buttonLoad.Text = "Load";
             this.buttonLoad.UseVisualStyleBackColor = true;
@@ -193,7 +154,7 @@
             // 
             // dateTimePickerStartDate
             // 
-            this.dateTimePickerStartDate.Location = new System.Drawing.Point(537, 388);
+            this.dateTimePickerStartDate.Location = new System.Drawing.Point(99, 518);
             this.dateTimePickerStartDate.Name = "dateTimePickerStartDate";
             this.dateTimePickerStartDate.Size = new System.Drawing.Size(240, 22);
             this.dateTimePickerStartDate.TabIndex = 7;
@@ -202,7 +163,7 @@
             // labelStartDate
             // 
             this.labelStartDate.AutoSize = true;
-            this.labelStartDate.Location = new System.Drawing.Point(448, 391);
+            this.labelStartDate.Location = new System.Drawing.Point(12, 523);
             this.labelStartDate.Name = "labelStartDate";
             this.labelStartDate.Size = new System.Drawing.Size(69, 16);
             this.labelStartDate.TabIndex = 8;
@@ -211,15 +172,16 @@
             // labelEndDate
             // 
             this.labelEndDate.AutoSize = true;
-            this.labelEndDate.Location = new System.Drawing.Point(448, 440);
+            this.labelEndDate.Location = new System.Drawing.Point(15, 558);
             this.labelEndDate.Name = "labelEndDate";
             this.labelEndDate.Size = new System.Drawing.Size(69, 16);
             this.labelEndDate.TabIndex = 9;
             this.labelEndDate.Text = "End Date: ";
+            this.labelEndDate.Click += new System.EventHandler(this.labelEndDate_Click);
             // 
             // dateTimePickerEndDate
             // 
-            this.dateTimePickerEndDate.Location = new System.Drawing.Point(537, 435);
+            this.dateTimePickerEndDate.Location = new System.Drawing.Point(99, 553);
             this.dateTimePickerEndDate.Name = "dateTimePickerEndDate";
             this.dateTimePickerEndDate.Size = new System.Drawing.Size(240, 22);
             this.dateTimePickerEndDate.TabIndex = 10;
@@ -229,7 +191,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(903, 574);
+            this.ClientSize = new System.Drawing.Size(1070, 750);
             this.Controls.Add(this.dateTimePickerEndDate);
             this.Controls.Add(this.labelEndDate);
             this.Controls.Add(this.labelStartDate);
@@ -238,7 +200,6 @@
             this.Controls.Add(this.textBoxTickerSelect);
             this.Controls.Add(this.labelTickerSelect);
             this.Controls.Add(this.dataGridViewStockDisplay);
-            this.Controls.Add(this.groupBoxChooseDisplay);
             this.Controls.Add(this.groupBoxPeriod);
             this.Controls.Add(this.chartStockDisplay);
             this.Name = "Form1";
@@ -247,8 +208,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.chartStockDisplay)).EndInit();
             this.groupBoxPeriod.ResumeLayout(false);
             this.groupBoxPeriod.PerformLayout();
-            this.groupBoxChooseDisplay.ResumeLayout(false);
-            this.groupBoxChooseDisplay.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewStockDisplay)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -262,9 +221,6 @@
         private System.Windows.Forms.RadioButton radioButtonDaily;
         private System.Windows.Forms.RadioButton radioButtonWeekly;
         private System.Windows.Forms.RadioButton radioButtonMonthly;
-        private System.Windows.Forms.GroupBox groupBoxChooseDisplay;
-        private System.Windows.Forms.RadioButton radioButtonChooseChart;
-        private System.Windows.Forms.RadioButton radioButtonChooseGridView;
         private System.Windows.Forms.DataGridView dataGridViewStockDisplay;
         private System.Windows.Forms.Label labelTickerSelect;
         private System.Windows.Forms.TextBox textBoxTickerSelect;

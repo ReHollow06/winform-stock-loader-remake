@@ -9,7 +9,7 @@ using CsvHelper.Configuration.Attributes;
 
 namespace StockAnalyzer
 {
-    internal class Candlestick
+    internal class Candlestick // class for representing a candlestick data point
     {
         public DateTime Date { get; set; }
         public Decimal Open { get; set; }
