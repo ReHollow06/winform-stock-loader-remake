@@ -61,6 +61,7 @@ namespace StockAnalyzer
             }
 
             chart.Series["Series1"].XValueMember = "Date";
+            chart.Series["Series1"].XValueType = ChartValueType.Date;
             chart.Series["Series1"].YValueMembers = "Open, High, Low, Close";
             chart.Series["Series1"].CustomProperties = "PriceDownColor=red,PriceUpColor=green";
             chart.DataManipulator.IsStartFromFirst = true;
