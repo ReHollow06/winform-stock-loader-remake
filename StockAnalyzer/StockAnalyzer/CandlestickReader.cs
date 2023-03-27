@@ -25,13 +25,25 @@ namespace StockAnalyzer
             this.startDate = startDate;
             this.endDate = endDate;
             this.stockFile = new FileInfo(filePath);
-
-            using (var reader = new StreamReader(stockFile.FullName))
+            StreamReader fileReader = null;
+            try
             {
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                fileReader = new StreamReader(stockFile.FullName);
+            }
+            catch (Exception)
+            {
+                fileReader = null;
+            }
+
+            if (fileReader != null)
+            {
+                using (fileReader)
                 {
-                    candlesticks = csv.GetRecords<Candlestick>().ToList();
-                }
+                    using (var csv = new CsvReader(fileReader, CultureInfo.InvariantCulture))
+                    {
+                        candlesticks = csv.GetRecords<Candlestick>().ToList();
+                    }
+                } 
             }
         }
 

@@ -38,7 +38,6 @@ namespace StockAnalyzer
             DateTime startDate = dateTimePickerStartDate.Value;
             DateTime endDate = dateTimePickerEndDate.Value;
 
-
             if (radioButtonDaily.Checked)
             {
                 timePeriod = "Day";
@@ -52,11 +51,14 @@ namespace StockAnalyzer
                 timePeriod = "Month";
             }
 
-            string fileName = textBoxTickerSelect.Text.ToUpper(); // gets text from textbox for ticker
+            string tickerName = textBoxTickerSelect.Text.ToUpper(); // gets text from textbox for ticker
+
+            StockChart displayChart = new StockChart(dataFolder, tickerName, timePeriod, startDate, endDate);
+            displayChart.Show();
 
             try
             {
-                string filePath = dataFolder + @"\" + textBoxTickerSelect.Text + "-" + timePeriod + ".csv"; // Path to csv file
+                string filePath = dataFolder + @"\" + tickerName + "-" + timePeriod + ".csv"; // Path to csv file
                 var file = new FileInfo(filePath); // FileInfo object to csv file
 
                 
@@ -93,7 +95,7 @@ namespace StockAnalyzer
                 MessageBox.Show("Invalid ticker name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
             }
 
-}
+        }
 
         private void radioButtonChooseChart_CheckedChanged(object sender, EventArgs e)
         {
