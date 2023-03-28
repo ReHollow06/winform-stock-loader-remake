@@ -65,7 +65,7 @@ namespace StockAnalyzer
         /// <summary>
         /// Populates a chart with data from candlesticks list
         /// </summary>
-        public void populateChart(Chart chart) // 
+        public void populateChart(Chart chart)
         {
             ArrayList dataSource = new ArrayList();
 
@@ -78,15 +78,50 @@ namespace StockAnalyzer
                 }
             }
 
-            chart.Series["Series1"].XValueMember = "Date";
-            chart.Series["Series1"].XValueType = ChartValueType.Date;
-            chart.Series["Series1"].YValueMembers = "Open, High, Low, Close";
-            chart.Series["Series1"].CustomProperties = "PriceDownColor=red,PriceUpColor=green";
-            chart.DataManipulator.IsStartFromFirst = true;
-            chart.Series["Series1"]["ShowOpenClose"] = "Both";
+            chart.Series.Clear();
+            Series series = chart.Series.Add("Candlestick");
+            series.CustomProperties = "PriceDownColor=red,PriceUpColor=green";
+            series.ChartType = SeriesChartType.Candlestick;
+            series.XValueType = ChartValueType.Date;
 
-            chart.DataSource = dataSource;
-            chart.DataBind();
+            foreach (Candlestick d in dataSource)
+            {
+                DataPoint dp = new DataPoint();
+                dp.SetValueXY(d.Date, d.High, d.Low, d.Open, d.Close);
+                series.Points.Add(dp);
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of integers corresponding to indices in the candlestick list which fit the criteria of a doji candlestick
+        /// </summary>
+        /// <returns></returns>
+        public List<int> dojiIndex()
+        {
+            List<int> indices = new List<int>();
+
+            for (int i = 0; i < this.candlesticks.Count; i++)
+            {
+                var cs = candlesticks[i];
+                Decimal bodyLength = Math.Abs(cs.Close - cs.Open);
+
+                // Calculate the length of the shadow of the candle
+                Decimal shadowLength = Math.Max(cs.High - cs.Close, cs.High - cs.Open);
+
+                // Calculate the total length of the candle
+                Decimal totalLength = bodyLength + shadowLength;
+
+                if (bodyLength < (Decimal)0.1 * totalLength)
+                {
+                    indices.Add(i);
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+            return indices;
         }
     }
 }

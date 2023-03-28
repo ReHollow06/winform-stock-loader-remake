@@ -19,16 +19,38 @@ namespace StockAnalyzer
 {
     public partial class Form1 : Form
     {
-
         DataTable stockValues = new DataTable(); // datatable to hold stock value for display
         public Form1()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Adds items in a specified directory to a specified ComboBox
+        /// </summary>
+        /// <param name="comboBox"></param>
+        /// <param name="dataFolder"></param>
+        /// <param name="format"></param>
+        private void LoadComboBoxItems(ComboBox comboBox, string dataFolder, string format) 
+        {
+            comboBox.Items.Clear();
+            string directoryPath = dataFolder;
+            string searchPattern = format;
+            if (Directory.Exists(directoryPath))
+            {
+                string[] fileNames = Directory.GetFiles(directoryPath, format);
+                foreach (string fileName in fileNames)
+                {
+                    comboBox.Items.Add(Path.GetFileName(fileName));
+                }
+            }
+        }
+
+
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            string dataFolder = "Stock Data";
+            LoadComboBoxItems(comboBoxTickerSelect, dataFolder, "*-Day.csv");
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)
@@ -51,14 +73,14 @@ namespace StockAnalyzer
                 timePeriod = "Month";
             }
 
-            string tickerName = textBoxTickerSelect.Text.ToUpper(); // gets text from textbox for ticker
+            string tickerName = comboBoxTickerSelect.Text; // gets text from combobox for ticker
 
             StockChart displayChart = new StockChart(dataFolder, tickerName, timePeriod, startDate, endDate);
             displayChart.Show();
 
             try
             {
-                string filePath = dataFolder + @"\" + tickerName + "-" + timePeriod + ".csv"; // Path to csv file
+                string filePath = dataFolder + @"\" + tickerName; // Path to csv file
                 var file = new FileInfo(filePath); // FileInfo object to csv file
 
                 
@@ -76,19 +98,12 @@ namespace StockAnalyzer
                     stockValues.Columns.Add("Close");
                     stockValues.Columns.Add("Volume");
                 }
-
+                
                 if (endDate <= startDate)
                 {
                     MessageBox.Show("End date behind start date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     stockValues.Rows.Clear();
                 }
-                else
-                {
-                    CandlestickReader reader = new CandlestickReader(startDate, endDate, filePath); // instantiates candlestick reader object
-                    reader.populateDataTable(stockValues); // populates data table Stock Values with values from stock csv file
-                    reader.populateChart(chartStockDisplay); // populates chartStockDisplay with values from stock csv file
-                }
-                dataGridViewStockDisplay.DataSource = stockValues;
             }
             catch (Exception) // Shows error message if ticker text box contains invalid ticker name
             {
@@ -97,31 +112,23 @@ namespace StockAnalyzer
 
         }
 
-        private void radioButtonChooseChart_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButtonChooseGridView_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chartStockDisplay_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxTickerSelect_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void radioButtonDaily_CheckedChanged(object sender, EventArgs e)
         {
-
+            string dataFolder = "Stock Data"; // Folder containing stock data
+            LoadComboBoxItems(comboBoxTickerSelect, dataFolder, "*-Day.csv");
         }
 
+        private void radioButtonWeekly_CheckedChanged(object sender, EventArgs e)
+        {
+            string dataFolder = "Stock Data"; // Folder containing stock data
+            LoadComboBoxItems(comboBoxTickerSelect, dataFolder, "*-Week.csv");
+        }
+
+        private void radioButtonMonthly_CheckedChanged(object sender, EventArgs e)
+        {
+            string dataFolder = "Stock Data"; // Folder containing stock data
+            LoadComboBoxItems(comboBoxTickerSelect, dataFolder, "*-Month.csv");
+        }
         public long countLines(FileInfo file) /// Reads in a FileInfo object and returns the number of lines in the file
         {
             long lineCount = 0;
@@ -140,5 +147,11 @@ namespace StockAnalyzer
         {
 
         }
+
+        private void comboBoxTickerSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }

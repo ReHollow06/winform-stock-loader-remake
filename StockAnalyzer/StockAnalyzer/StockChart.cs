@@ -26,12 +26,12 @@ namespace StockAnalyzer
             InitializeComponent();
 
             this.dataFolder = dataFolder;
-            this.tickerName = tickerName.ToUpper();
+            this.tickerName = tickerName;
             this.timePeriod = timePeriod;
             this.startDate = startDate;
             this.endDate = endDate;
 
-            filePath = dataFolder + @"\" + tickerName + "-" + timePeriod + ".csv"; // Path to csv file
+            filePath = dataFolder + @"\" + tickerName; // Path to csv file
             try
             {
                 this.file = new FileInfo(filePath); // FileInfo object to csv file
