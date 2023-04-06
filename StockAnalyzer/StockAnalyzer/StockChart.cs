@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace StockAnalyzer
 {
@@ -20,6 +21,8 @@ namespace StockAnalyzer
         DateTime endDate;
         string filePath;
         FileInfo file = null;
+        Form parentForm = null;
+        CandlestickReader csReader = null;
 
         public StockChart(string dataFolder, string tickerName, string timePeriod, DateTime startDate, DateTime endDate)
         {
@@ -41,6 +44,25 @@ namespace StockAnalyzer
                 MessageBox.Show("Invalid ticker name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.file = null;
             }
+            this.csReader = new CandlestickReader(startDate, endDate, filePath);
+        }
+
+        /// <summary>
+        /// Returns file path to csv file being read
+        /// </summary>
+        /// <returns></returns>
+        public string getFilePath()
+        {
+            return this.filePath;
+        }
+
+        /// <summary>
+        /// Returns chartStockDisplayWindow
+        /// </summary>
+        /// <returns></returns>
+        public Chart getChartStockDisplay()
+        {
+            return this.chartStockDisplayWindow;
         }
 
         private void StockChart_Load(object sender, EventArgs e)
@@ -56,5 +78,33 @@ namespace StockAnalyzer
 
             }
         }
+
+        void highlightPoints(List<int> points, PaintEventArgs e)
+        {
+            foreach (int point in points)
+            {
+                if (point > chartStockDisplayWindow.Series[0].Points.Count)
+                {
+                    continue;
+                }
+                else
+                {
+                    DataPoint dp = chartStockDisplayWindow.Series[0].Points[point];
+                    float x = (float)chartStockDisplayWindow.ChartAreas[0].AxisX.ValueToPixelPosition(dp.XValue);
+                    float y = (float)chartStockDisplayWindow.ChartAreas[0].AxisY.ValueToPixelPosition(dp.YValues[0]);
+
+                    float boxWidth = 10f;
+                    float boxHeight = 10f;
+                    e.Graphics.DrawRectangle(Pens.Black, x - boxWidth / 2, y - boxHeight / 2, boxWidth, boxHeight);
+                }
+            }
+        }
+        private void chartStockDisplayWindow_Paint(object sender, PaintEventArgs e)
+        {
+            List<int> points = this.csReader.dojiIndex();
+            highlightPoints(points, e);
+        }
     }
+
+
 }

@@ -20,6 +20,7 @@ namespace StockAnalyzer
     public partial class Form1 : Form
     {
         DataTable stockValues = new DataTable(); // datatable to hold stock value for display
+        CandlestickReader candlestickReader;
         public Form1()
         {
             InitializeComponent();
@@ -74,41 +75,10 @@ namespace StockAnalyzer
             }
 
             string tickerName = comboBoxTickerSelect.Text; // gets text from combobox for ticker
-
             StockChart displayChart = new StockChart(dataFolder, tickerName, timePeriod, startDate, endDate);
             displayChart.Show();
-
-            try
-            {
-                string filePath = dataFolder + @"\" + tickerName; // Path to csv file
-                var file = new FileInfo(filePath); // FileInfo object to csv file
-
-                
-                string[] lines = File.ReadAllLines(filePath);
-
-                if (lines[0].ToLower() == "\"date\",\"open\",\"high\",\"low\",\"close\",\"volume\"") // initialise columns
-                {
-                    
-                    stockValues.Rows.Clear();
-                    stockValues.Columns.Clear();
-                    stockValues.Columns.Add("Date");
-                    stockValues.Columns.Add("Open");
-                    stockValues.Columns.Add("High");
-                    stockValues.Columns.Add("Low");
-                    stockValues.Columns.Add("Close");
-                    stockValues.Columns.Add("Volume");
-                }
-                
-                if (endDate <= startDate)
-                {
-                    MessageBox.Show("End date behind start date", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    stockValues.Rows.Clear();
-                }
-            }
-            catch (Exception) // Shows error message if ticker text box contains invalid ticker name
-            {
-                MessageBox.Show("Invalid ticker name", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); 
-            }
+            this.candlestickReader = new CandlestickReader(startDate, endDate, displayChart.getFilePath());
+            List<int> dojiIndex = candlestickReader.dojiIndex();
 
         }
 
@@ -142,6 +112,12 @@ namespace StockAnalyzer
 
             return lineCount;
         }
+
+        /// <summary>
+        /// Draws a box around a certain data point in a chart based on index
+        /// </summary>
+        /// <param name="dpIndex"></param>
+        
 
         private void labelEndDate_Click(object sender, EventArgs e)
         {

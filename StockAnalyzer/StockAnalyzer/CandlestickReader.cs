@@ -90,6 +90,8 @@ namespace StockAnalyzer
                 dp.SetValueXY(d.Date, d.High, d.Low, d.Open, d.Close);
                 series.Points.Add(dp);
             }
+
+            chart.ChartAreas[0].AxisY.IsStartedFromZero = false;
         }
 
         /// <summary>
@@ -103,15 +105,13 @@ namespace StockAnalyzer
             for (int i = 0; i < this.candlesticks.Count; i++)
             {
                 var cs = candlesticks[i];
-                Decimal bodyLength = Math.Abs(cs.Close - cs.Open);
+                Decimal bodyLength = Math.Abs(cs.Open - cs.Close);
 
-                // Calculate the length of the shadow of the candle
-                Decimal shadowLength = Math.Max(cs.High - cs.Close, cs.High - cs.Open);
+                Decimal range = Math.Abs(cs.High - cs.Low);
 
-                // Calculate the total length of the candle
-                Decimal totalLength = bodyLength + shadowLength;
+                Decimal bodyRatio = bodyLength/ range;
 
-                if (bodyLength < (Decimal)0.1 * totalLength)
+                if (bodyRatio < 0.01m)
                 {
                     indices.Add(i);
                 }
@@ -122,6 +122,16 @@ namespace StockAnalyzer
             }
 
             return indices;
+        }
+
+        public DateTime getStartDate()
+        {
+            return this.startDate;
+        }
+
+        public DateTime returnEndDate()
+        {
+            return this.endDate;
         }
     }
 }

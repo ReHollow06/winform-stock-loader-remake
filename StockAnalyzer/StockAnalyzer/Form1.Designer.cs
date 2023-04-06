@@ -158,7 +158,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(421, 394);
+            this.ClientSize = new System.Drawing.Size(547, 394);
             this.Controls.Add(this.comboBoxTickerSelect);
             this.Controls.Add(this.dateTimePickerEndDate);
             this.Controls.Add(this.labelEndDate);
