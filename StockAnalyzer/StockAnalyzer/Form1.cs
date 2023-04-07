@@ -17,10 +17,18 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace StockAnalyzer
 {
+
+    public enum Patterns
+    {
+        Doji,
+        Marubozu_bullish,
+        Marubozu_bearish
+    }
     public partial class Form1 : Form
     {
         DataTable stockValues = new DataTable(); // datatable to hold stock value for display
         CandlestickReader candlestickReader;
+        Patterns highlightPattern;
         public Form1()
         {
             InitializeComponent();
@@ -50,6 +58,7 @@ namespace StockAnalyzer
         private void Form1_Load(object sender, EventArgs e)
         {
             string dataFolder = "Stock Data";
+            highlightPattern = Patterns.Doji;
             LoadComboBoxItems(comboBoxTickerSelect, dataFolder, "*-Day.csv");
         }
 
@@ -74,7 +83,7 @@ namespace StockAnalyzer
             }
 
             string tickerName = comboBoxTickerSelect.Text; // gets text from combobox for ticker
-            StockChart displayChart = new StockChart(dataFolder, tickerName, timePeriod, startDate, endDate);
+            StockChart displayChart = new StockChart(dataFolder, tickerName, timePeriod, startDate, endDate, highlightPattern);
             displayChart.Show();
             this.candlestickReader = new CandlestickReader(startDate, endDate, displayChart.getFilePath());
         }
@@ -126,5 +135,19 @@ namespace StockAnalyzer
 
         }
 
+        private void radioButtonDoji_CheckedChanged(object sender, EventArgs e)
+        {
+            highlightPattern = Patterns.Doji;
+        }
+
+        private void radioButtonMarubozuBullish_CheckedChanged(object sender, EventArgs e)
+        {
+            highlightPattern = Patterns.Marubozu_bullish;
+        }
+
+        private void radioButtonMarubozuBearish_CheckedChanged(object sender, EventArgs e)
+        {
+            highlightPattern = Patterns.Marubozu_bearish;
+        }
     }
 }

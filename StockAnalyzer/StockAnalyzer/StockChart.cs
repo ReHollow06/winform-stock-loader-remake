@@ -21,10 +21,10 @@ namespace StockAnalyzer
         DateTime endDate;
         string filePath;
         FileInfo file = null;
-        Form parentForm = null;
+        Patterns highlightPattern;
         CandlestickReader csReader = null;
 
-        public StockChart(string dataFolder, string tickerName, string timePeriod, DateTime startDate, DateTime endDate)
+        public StockChart(string dataFolder, string tickerName, string timePeriod, DateTime startDate, DateTime endDate, Patterns pattern)
         {
             InitializeComponent();
 
@@ -33,6 +33,7 @@ namespace StockAnalyzer
             this.timePeriod = timePeriod;
             this.startDate = startDate;
             this.endDate = endDate;
+            this.highlightPattern = pattern;
 
             filePath = dataFolder + @"\" + tickerName; // Path to csv file
             try
@@ -79,7 +80,7 @@ namespace StockAnalyzer
             }
         }
 
-        void highlightPoints(List<int> points, PaintEventArgs e)
+        void highlightPoints(List<int> points, Pen color, PaintEventArgs e)
         {
             foreach (int point in points)
             {
@@ -91,14 +92,30 @@ namespace StockAnalyzer
 
                     float boxWidth = 10f;
                     float boxHeight = 10f;
-                    e.Graphics.DrawRectangle(Pens.Black, x - boxWidth / 2, y - boxHeight / 2, boxWidth, boxHeight);
+                    e.Graphics.DrawRectangle(color, x - boxWidth / 2, y - boxHeight / 2, boxWidth, boxHeight);
                 }
             }
         }
         private void chartStockDisplayWindow_Paint(object sender, PaintEventArgs e)
         {
-            List<int> points = this.csReader.dojiIndex();
-            highlightPoints(points, e);
+            List<int> points = new List<int>();
+            Pen color = Pens.Black;            
+            switch (this.highlightPattern)
+            {
+                case Patterns.Doji:
+                    points = this.csReader.dojiIndex();
+                    break;
+                case Patterns.Marubozu_bearish:
+                    points = this.csReader.bearishMarubozuIndex();
+                    color = Pens.Blue;
+                    break;
+                case Patterns.Marubozu_bullish:
+                    points = this.csReader.bullishMarubozuIndex();
+                    color = Pens.Red;
+                    break;
+            }
+            //List<int> points = this.csReader.dojiIndex();
+            highlightPoints(points, color, e);
         }
 
         private void chartStockDisplayWindow_Click(object sender, EventArgs e)

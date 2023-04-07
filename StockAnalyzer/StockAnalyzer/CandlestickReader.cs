@@ -132,16 +132,18 @@ namespace StockAnalyzer
             for (int i = 0; i < this.candlesticks.Count(); i++)
             {
                 var cs = candlesticks[i];
-                // Calculate the difference between high and low prices
-                Decimal diff = Math.Abs(cs.High - cs.Low);
+                var bodyLength = Math.Abs(cs.Close - cs.Open);
+                var upperWickLength = cs.High - Math.Max(cs.Close, cs.Open);
+                var lowerWickLength = Math.Min(cs.Close, cs.Open) - cs.Low;
+                var totalLength = bodyLength + upperWickLength + lowerWickLength;
+                
+                var bodyToTotalLengthRatio = bodyLength / totalLength;
 
-                // Calculate the difference between open and close prices
-                Decimal oc_diff = Math.Abs(cs.Open - cs.Close);
 
-                if (oc_diff / cs.High < 0.05m)
+                if (bodyToTotalLengthRatio >= 0.9m)
                 {
                     // Check if the candlestick is bullish or bearish
-                    if (cs.Open < cs.Close)
+                    if (cs.Open < cs.Close && upperWickLength <= bodyLength * 0.1m && lowerWickLength <= bodyLength * 0.1m)
                     {
                         indices.Add(i);
                     }
@@ -163,22 +165,25 @@ namespace StockAnalyzer
             for (int i = 0; i < this.candlesticks.Count(); i++)
             {
                 var cs = candlesticks[i];
-                // Calculate the difference between high and low prices
-                Decimal diff = Math.Abs(cs.High - cs.Low);
+                var bodyLength = Math.Abs(cs.Close - cs.Open);
+                var upperWickLength = cs.High - Math.Max(cs.Close, cs.Open);
+                var lowerWickLength = Math.Min(cs.Close, cs.Open) - cs.Low;
+                var totalLength = bodyLength + upperWickLength + lowerWickLength;
 
-                // Calculate the difference between open and close prices
-                Decimal oc_diff = Math.Abs(cs.Open - cs.Close);
+                var bodyToTotalLengthRatio = bodyLength / totalLength;
 
-                if (oc_diff / cs.High < 0.05m)
+
+                if (bodyToTotalLengthRatio >= 0.9m)
                 {
                     // Check if the candlestick is bullish or bearish
-                    if (cs.Open >= cs.Close)
+                    if (cs.Close < cs.Open && upperWickLength <= bodyLength * 0.1m && lowerWickLength <= bodyLength * 0.1m)
                     {
                         indices.Add(i);
                     }
                     else
                     {
                         continue;
+
                     }
                 }
             }
