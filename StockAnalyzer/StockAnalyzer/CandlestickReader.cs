@@ -105,13 +105,14 @@ namespace StockAnalyzer
             for (int i = 0; i < this.candlesticks.Count; i++)
             {
                 var cs = candlesticks[i];
-                Decimal bodyLength = Math.Abs(cs.Open - cs.Close);
+                // Calculate the difference between open and close prices
+                Decimal diff = Math.Abs(cs.Open - cs.Close);
 
+                // Calculate the range between the high and low prices
                 Decimal range = Math.Abs(cs.High - cs.Low);
 
-                Decimal bodyRatio = bodyLength/ range;
-
-                if (bodyRatio < 0.01m)
+                // Check if the difference between open and close is less than the threshold
+                if (diff / range < 0.05m)
                 {
                     indices.Add(i);
                 }

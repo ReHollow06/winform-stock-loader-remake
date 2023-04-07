@@ -83,11 +83,7 @@ namespace StockAnalyzer
         {
             foreach (int point in points)
             {
-                if (point > chartStockDisplayWindow.Series[0].Points.Count)
-                {
-                    continue;
-                }
-                else
+                if (point >=0 && point < chartStockDisplayWindow.Series[0].Points.Count)
                 {
                     DataPoint dp = chartStockDisplayWindow.Series[0].Points[point];
                     float x = (float)chartStockDisplayWindow.ChartAreas[0].AxisX.ValueToPixelPosition(dp.XValue);
@@ -103,6 +99,11 @@ namespace StockAnalyzer
         {
             List<int> points = this.csReader.dojiIndex();
             highlightPoints(points, e);
+        }
+
+        private void chartStockDisplayWindow_Click(object sender, EventArgs e)
+        {
+
         }
     }
 

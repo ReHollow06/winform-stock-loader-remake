@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockAnalyzer", "StockAnalyzer\StockAnalyzer.csproj", "{F1743A5C-78C1-40EF-866B-029979BB7CE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{52D74EFE-304A-4484-8055-EE1F9F9681A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F1743A5C-78C1-40EF-866B-029979BB7CE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1743A5C-78C1-40EF-866B-029979BB7CE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1743A5C-78C1-40EF-866B-029979BB7CE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52D74EFE-304A-4484-8055-EE1F9F9681A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52D74EFE-304A-4484-8055-EE1F9F9681A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52D74EFE-304A-4484-8055-EE1F9F9681A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52D74EFE-304A-4484-8055-EE1F9F9681A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

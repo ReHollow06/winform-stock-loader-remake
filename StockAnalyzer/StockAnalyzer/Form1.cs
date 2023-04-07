@@ -36,7 +36,6 @@ namespace StockAnalyzer
         {
             comboBox.Items.Clear();
             string directoryPath = dataFolder;
-            string searchPattern = format;
             if (Directory.Exists(directoryPath))
             {
                 string[] fileNames = Directory.GetFiles(directoryPath, format);

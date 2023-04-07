@@ -52,6 +52,7 @@
             this.chartStockDisplayWindow.Size = new System.Drawing.Size(700, 432);
             this.chartStockDisplayWindow.TabIndex = 1;
             this.chartStockDisplayWindow.Text = "chartStockDisplayWindow";
+            this.chartStockDisplayWindow.Click += new System.EventHandler(this.chartStockDisplayWindow_Click);
             this.chartStockDisplayWindow.Paint += new System.Windows.Forms.PaintEventHandler(this.chartStockDisplayWindow_Paint);
             // 
             // StockChart
