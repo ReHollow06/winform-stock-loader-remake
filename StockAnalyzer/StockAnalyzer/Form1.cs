@@ -77,8 +77,6 @@ namespace StockAnalyzer
             StockChart displayChart = new StockChart(dataFolder, tickerName, timePeriod, startDate, endDate);
             displayChart.Show();
             this.candlestickReader = new CandlestickReader(startDate, endDate, displayChart.getFilePath());
-            List<int> dojiIndex = candlestickReader.dojiIndex();
-
         }
 
         private void radioButtonDaily_CheckedChanged(object sender, EventArgs e)

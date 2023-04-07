@@ -39,7 +39,11 @@
             this.labelEndDate = new System.Windows.Forms.Label();
             this.dateTimePickerEndDate = new System.Windows.Forms.DateTimePicker();
             this.comboBoxTickerSelect = new System.Windows.Forms.ComboBox();
+            this.groupBoxPatterns = new System.Windows.Forms.GroupBox();
+            this.radioButtonDoji = new System.Windows.Forms.RadioButton();
+            this.radioButtonMarubozu = new System.Windows.Forms.RadioButton();
             this.groupBoxPeriod.SuspendLayout();
+            this.groupBoxPatterns.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxPeriod
@@ -154,11 +158,45 @@
             this.comboBoxTickerSelect.TabIndex = 11;
             this.comboBoxTickerSelect.SelectedIndexChanged += new System.EventHandler(this.comboBoxTickerSelect_SelectedIndexChanged);
             // 
+            // groupBoxPatterns
+            // 
+            this.groupBoxPatterns.Controls.Add(this.radioButtonMarubozu);
+            this.groupBoxPatterns.Controls.Add(this.radioButtonDoji);
+            this.groupBoxPatterns.Location = new System.Drawing.Point(346, 43);
+            this.groupBoxPatterns.Name = "groupBoxPatterns";
+            this.groupBoxPatterns.Size = new System.Drawing.Size(167, 202);
+            this.groupBoxPatterns.TabIndex = 12;
+            this.groupBoxPatterns.TabStop = false;
+            this.groupBoxPatterns.Text = "Patterns";
+            // 
+            // radioButtonDoji
+            // 
+            this.radioButtonDoji.AutoSize = true;
+            this.radioButtonDoji.Location = new System.Drawing.Point(6, 21);
+            this.radioButtonDoji.Name = "radioButtonDoji";
+            this.radioButtonDoji.Size = new System.Drawing.Size(52, 20);
+            this.radioButtonDoji.TabIndex = 0;
+            this.radioButtonDoji.TabStop = true;
+            this.radioButtonDoji.Text = "Doji";
+            this.radioButtonDoji.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonMarubozu
+            // 
+            this.radioButtonMarubozu.AutoSize = true;
+            this.radioButtonMarubozu.Location = new System.Drawing.Point(6, 48);
+            this.radioButtonMarubozu.Name = "radioButtonMarubozu";
+            this.radioButtonMarubozu.Size = new System.Drawing.Size(109, 25);
+            this.radioButtonMarubozu.TabIndex = 1;
+            this.radioButtonMarubozu.TabStop = true;
+            this.radioButtonMarubozu.Text = "Marubozu";
+            this.radioButtonMarubozu.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(547, 394);
+            this.Controls.Add(this.groupBoxPatterns);
             this.Controls.Add(this.comboBoxTickerSelect);
             this.Controls.Add(this.dateTimePickerEndDate);
             this.Controls.Add(this.labelEndDate);
@@ -172,6 +210,8 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.groupBoxPeriod.ResumeLayout(false);
             this.groupBoxPeriod.PerformLayout();
+            this.groupBoxPatterns.ResumeLayout(false);
+            this.groupBoxPatterns.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,6 +229,9 @@
         private System.Windows.Forms.Label labelEndDate;
         private System.Windows.Forms.DateTimePicker dateTimePickerEndDate;
         private System.Windows.Forms.ComboBox comboBoxTickerSelect;
+        private System.Windows.Forms.GroupBox groupBoxPatterns;
+        private System.Windows.Forms.RadioButton radioButtonMarubozu;
+        private System.Windows.Forms.RadioButton radioButtonDoji;
     }
 }
 

@@ -125,6 +125,67 @@ namespace StockAnalyzer
             return indices;
         }
 
+        public List<int> bullishMarubozuIndex()
+        {
+            List<int> indices = new List<int>();
+
+            for (int i = 0; i < this.candlesticks.Count(); i++)
+            {
+                var cs = candlesticks[i];
+                // Calculate the difference between high and low prices
+                Decimal diff = Math.Abs(cs.High - cs.Low);
+
+                // Calculate the difference between open and close prices
+                Decimal oc_diff = Math.Abs(cs.Open - cs.Close);
+
+                if (oc_diff / cs.High < 0.05m)
+                {
+                    // Check if the candlestick is bullish or bearish
+                    if (cs.Open < cs.Close)
+                    {
+                        indices.Add(i);
+                    }
+                    else
+                    {
+                        continue;
+
+                    }                
+                }
+            }
+
+            return indices;
+        }
+
+        public List<int> bearishMarubozuIndex()
+        {
+            List<int> indices = new List<int>();
+
+            for (int i = 0; i < this.candlesticks.Count(); i++)
+            {
+                var cs = candlesticks[i];
+                // Calculate the difference between high and low prices
+                Decimal diff = Math.Abs(cs.High - cs.Low);
+
+                // Calculate the difference between open and close prices
+                Decimal oc_diff = Math.Abs(cs.Open - cs.Close);
+
+                if (oc_diff / cs.High < 0.05m)
+                {
+                    // Check if the candlestick is bullish or bearish
+                    if (cs.Open >= cs.Close)
+                    {
+                        indices.Add(i);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            return indices;
+        }
+
         public DateTime getStartDate()
         {
             return this.startDate;
