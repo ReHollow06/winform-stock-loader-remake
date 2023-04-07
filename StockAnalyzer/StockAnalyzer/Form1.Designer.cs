@@ -43,6 +43,8 @@
             this.radioButtonMarubozuBullish = new System.Windows.Forms.RadioButton();
             this.radioButtonDoji = new System.Windows.Forms.RadioButton();
             this.radioButtonMarubozuBearish = new System.Windows.Forms.RadioButton();
+            this.radioButtonHammerBullish = new System.Windows.Forms.RadioButton();
+            this.radioButtonHammerBearish = new System.Windows.Forms.RadioButton();
             this.groupBoxPeriod.SuspendLayout();
             this.groupBoxPatterns.SuspendLayout();
             this.SuspendLayout();
@@ -161,6 +163,8 @@
             // 
             // groupBoxPatterns
             // 
+            this.groupBoxPatterns.Controls.Add(this.radioButtonHammerBearish);
+            this.groupBoxPatterns.Controls.Add(this.radioButtonHammerBullish);
             this.groupBoxPatterns.Controls.Add(this.radioButtonMarubozuBearish);
             this.groupBoxPatterns.Controls.Add(this.radioButtonMarubozuBullish);
             this.groupBoxPatterns.Controls.Add(this.radioButtonDoji);
@@ -200,12 +204,36 @@
             this.radioButtonMarubozuBearish.AutoSize = true;
             this.radioButtonMarubozuBearish.Location = new System.Drawing.Point(6, 74);
             this.radioButtonMarubozuBearish.Name = "radioButtonMarubozuBearish";
-            this.radioButtonMarubozuBearish.Size = new System.Drawing.Size(170, 25);
+            this.radioButtonMarubozuBearish.Size = new System.Drawing.Size(136, 20);
             this.radioButtonMarubozuBearish.TabIndex = 2;
             this.radioButtonMarubozuBearish.TabStop = true;
             this.radioButtonMarubozuBearish.Text = "Bearish Marubozu";
             this.radioButtonMarubozuBearish.UseVisualStyleBackColor = true;
             this.radioButtonMarubozuBearish.CheckedChanged += new System.EventHandler(this.radioButtonMarubozuBearish_CheckedChanged);
+            // 
+            // radioButtonHammerBullish
+            // 
+            this.radioButtonHammerBullish.AutoSize = true;
+            this.radioButtonHammerBullish.Location = new System.Drawing.Point(6, 100);
+            this.radioButtonHammerBullish.Name = "radioButtonHammerBullish";
+            this.radioButtonHammerBullish.Size = new System.Drawing.Size(122, 20);
+            this.radioButtonHammerBullish.TabIndex = 3;
+            this.radioButtonHammerBullish.TabStop = true;
+            this.radioButtonHammerBullish.Text = "Bullish Hammer";
+            this.radioButtonHammerBullish.UseVisualStyleBackColor = true;
+            this.radioButtonHammerBullish.CheckedChanged += new System.EventHandler(this.radioButtonHammerBullish_CheckedChanged);
+            // 
+            // radioButtonHammerBearish
+            // 
+            this.radioButtonHammerBearish.AutoSize = true;
+            this.radioButtonHammerBearish.Location = new System.Drawing.Point(6, 126);
+            this.radioButtonHammerBearish.Name = "radioButtonHammerBearish";
+            this.radioButtonHammerBearish.Size = new System.Drawing.Size(161, 25);
+            this.radioButtonHammerBearish.TabIndex = 4;
+            this.radioButtonHammerBearish.TabStop = true;
+            this.radioButtonHammerBearish.Text = "Bearish Hammer";
+            this.radioButtonHammerBearish.UseVisualStyleBackColor = true;
+            this.radioButtonHammerBearish.CheckedChanged += new System.EventHandler(this.radioButtonHammerBearish_CheckedChanged);
             // 
             // Form1
             // 
@@ -249,6 +277,8 @@
         private System.Windows.Forms.RadioButton radioButtonMarubozuBullish;
         private System.Windows.Forms.RadioButton radioButtonDoji;
         private System.Windows.Forms.RadioButton radioButtonMarubozuBearish;
+        private System.Windows.Forms.RadioButton radioButtonHammerBearish;
+        private System.Windows.Forms.RadioButton radioButtonHammerBullish;
     }
 }
 

@@ -22,7 +22,9 @@ namespace StockAnalyzer
     {
         Doji,
         Marubozu_bullish,
-        Marubozu_bearish
+        Marubozu_bearish,
+        Hammer_bullish,
+        Hammer_bearish
     }
     public partial class Form1 : Form
     {
@@ -148,6 +150,16 @@ namespace StockAnalyzer
         private void radioButtonMarubozuBearish_CheckedChanged(object sender, EventArgs e)
         {
             highlightPattern = Patterns.Marubozu_bearish;
+        }
+
+        private void radioButtonHammerBearish_CheckedChanged(object sender, EventArgs e)
+        {
+            highlightPattern = Patterns.Hammer_bearish;
+        }
+
+        private void radioButtonHammerBullish_CheckedChanged(object sender, EventArgs e)
+        {
+            highlightPattern = Patterns.Hammer_bullish;
         }
     }
 }

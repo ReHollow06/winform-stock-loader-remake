@@ -74,9 +74,7 @@ namespace StockAnalyzer
             }
             else if (this.file != null)
             {
-                CandlestickReader reader = new CandlestickReader(startDate, endDate, filePath); // instantiates candlestick reader object
-                reader.populateChart(chartStockDisplayWindow); // populates chartStockDisplay with values from stock csv file
-
+                csReader.populateChart(chartStockDisplayWindow); // populates chartStockDisplay with values from stock csv file
             }
         }
 
@@ -112,6 +110,14 @@ namespace StockAnalyzer
                 case Patterns.Marubozu_bullish:
                     points = this.csReader.bullishMarubozuIndex();
                     color = Pens.Red;
+                    break;
+                case Patterns.Hammer_bullish:
+                    points = this.csReader.bullishHammerIndex();
+                    color = Pens.Green;
+                    break;
+                case Patterns.Hammer_bearish:
+                    points = this.csReader.bearishHammerIndex();
+                    color= Pens.Magenta;
                     break;
             }
             //List<int> points = this.csReader.dojiIndex();

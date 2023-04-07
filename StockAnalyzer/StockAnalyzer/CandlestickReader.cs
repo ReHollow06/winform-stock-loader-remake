@@ -19,7 +19,12 @@ namespace StockAnalyzer
         DateTime startDate; // starting date from datetime selector
         DateTime endDate; // ending date from datetime selector
         FileInfo stockFile; // FileInfo object for csv stock file
-        List<Candlestick> candlesticks; // list of candlesticks 
+        List<Candlestick> candlesticks; // list of candlesticks
+
+        decimal hammerThreshold = 0.3m;
+        decimal dojiThreshold = 0.05m;
+        decimal marubozuThreshold = 0.9m;
+
         public CandlestickReader(DateTime startDate, DateTime endDate, string filePath)
         {
             this.startDate = startDate;
@@ -112,7 +117,7 @@ namespace StockAnalyzer
                 Decimal range = Math.Abs(cs.High - cs.Low);
 
                 // Check if the difference between open and close is less than the threshold
-                if (diff / range < 0.05m)
+                if (diff / range < dojiThreshold)
                 {
                     indices.Add(i);
                 }
@@ -125,6 +130,10 @@ namespace StockAnalyzer
             return indices;
         }
 
+        /// <summary>
+        /// Returns a list of integers corresponding to indices in the candlestick list which fit the criteria of a bullish marubozu candlestick 
+        /// </summary>
+        /// <returns></returns>
         public List<int> bullishMarubozuIndex()
         {
             List<int> indices = new List<int>();
@@ -140,7 +149,7 @@ namespace StockAnalyzer
                 var bodyToTotalLengthRatio = bodyLength / totalLength;
 
 
-                if (bodyToTotalLengthRatio >= 0.9m)
+                if (bodyToTotalLengthRatio >= marubozuThreshold)
                 {
                     // Check if the candlestick is bullish or bearish
                     if (cs.Open < cs.Close && upperWickLength <= bodyLength * 0.1m && lowerWickLength <= bodyLength * 0.1m)
@@ -157,7 +166,10 @@ namespace StockAnalyzer
 
             return indices;
         }
-
+        /// <summary>
+        /// Returns a list of integers corresponding to indices in the candlestick list which fit the criteria of a bullish marubozu candlestick 
+        /// </summary>
+        /// <returns></returns>
         public List<int> bearishMarubozuIndex()
         {
             List<int> indices = new List<int>();
@@ -173,7 +185,7 @@ namespace StockAnalyzer
                 var bodyToTotalLengthRatio = bodyLength / totalLength;
 
 
-                if (bodyToTotalLengthRatio >= 0.9m)
+                if (bodyToTotalLengthRatio >= marubozuThreshold)
                 {
                     // Check if the candlestick is bullish or bearish
                     if (cs.Close < cs.Open && upperWickLength <= bodyLength * 0.1m && lowerWickLength <= bodyLength * 0.1m)
@@ -184,6 +196,77 @@ namespace StockAnalyzer
                     {
                         continue;
 
+                    }
+                }
+            }
+
+            return indices;
+        }
+        public List<int> bullishHammerIndex()
+        {
+            List<int> indices = new List<int>();
+
+            for (int i = 0; i < this.candlesticks.Count(); i++)
+            {
+                var cs = candlesticks[i];
+                var bodyLength = Math.Abs(cs.Close - cs.Open);
+                var upperWickLength = cs.High - Math.Max(cs.Close, cs.Open);
+                var lowerWickLength = Math.Min(cs.Close, cs.Open) - cs.Low;
+                if (lowerWickLength == 0)
+                {
+                    continue;
+                }
+                var totalLength = bodyLength + upperWickLength + lowerWickLength;
+
+                var bodyToTotalLengthRatio = bodyLength / totalLength;
+                var upperWickToLowerWickRatio = upperWickLength / lowerWickLength;
+
+                if (bodyToTotalLengthRatio < hammerThreshold && upperWickLength <= bodyLength && lowerWickLength >= bodyLength)
+                {
+                    if (cs.Close > cs.Open && upperWickToLowerWickRatio < 0.3m)
+                    {
+                        indices.Add(i);
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+
+            return indices;
+        }
+
+        public List<int> bearishHammerIndex()
+        {
+            List<int> indices = new List<int>();
+
+            for (int i = 0; i < this.candlesticks.Count(); i++)
+            {
+                var cs = candlesticks[i];
+                var bodyLength = Math.Abs(cs.Close - cs.Open);
+                var upperWickLength = cs.High - Math.Max(cs.Close, cs.Open);
+                var lowerWickLength = Math.Min(cs.Close, cs.Open) - cs.Low;
+
+                if (lowerWickLength == 0)
+                {
+                    continue;
+                }
+
+                var totalLength = bodyLength + upperWickLength + lowerWickLength;
+
+                var bodyToTotalLengthRatio = bodyLength / totalLength;
+                var upperWickToLowerWickRatio = upperWickLength / lowerWickLength;
+
+                if (bodyToTotalLengthRatio < hammerThreshold && upperWickLength <= bodyLength && lowerWickLength >= bodyLength)
+                {
+                    if (cs.Close < cs.Open && upperWickToLowerWickRatio < 0.3m)
+                    {
+                        indices.Add(i);
+                    }
+                    else
+                    {
+                        continue;
                     }
                 }
             }
