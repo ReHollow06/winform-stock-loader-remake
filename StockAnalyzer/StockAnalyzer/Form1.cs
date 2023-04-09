@@ -121,12 +121,6 @@ namespace StockAnalyzer
             return lineCount;
         }
 
-        /// <summary>
-        /// Draws a box around a certain data point in a chart based on index
-        /// </summary>
-        /// <param name="dpIndex"></param>
-        
-
         private void labelEndDate_Click(object sender, EventArgs e)
         {
 

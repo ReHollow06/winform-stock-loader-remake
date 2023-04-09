@@ -202,6 +202,12 @@ namespace StockAnalyzer
 
             return indices;
         }
+
+        /// <summary>
+        /// Returns a list of integers corresponding to indices in the candlestick list which fit the criteria of a bullish hammer candlestick 
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public List<int> bullishHammerIndex()
         {
             List<int> indices = new List<int>();
@@ -237,6 +243,10 @@ namespace StockAnalyzer
             return indices;
         }
 
+        /// <summary>
+        /// Returns a list of integers corresponding to indices in the candlestick list which fit the criteria of a bearish hammer candlestick
+        /// </summary>
+        /// <returns></returns>
         public List<int> bearishHammerIndex()
         {
             List<int> indices = new List<int>();
