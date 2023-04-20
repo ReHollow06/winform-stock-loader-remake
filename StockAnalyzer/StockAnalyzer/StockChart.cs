@@ -23,8 +23,12 @@ namespace StockAnalyzer
         FileInfo file = null;
         Patterns highlightPattern;
         CandlestickReader csReader = null;
+        Dictionary<Patterns, Recogniser> recognisers = new Dictionary<Patterns, Recogniser>();
+        List<Candlestick> visibleCandlesticks;
+        Dictionary<string, Patterns> visiblePatterns = new Dictionary<string, Patterns>();
 
-        public StockChart(string dataFolder, string tickerName, string timePeriod, DateTime startDate, DateTime endDate, Patterns pattern)
+
+        public StockChart(string dataFolder, string tickerName, string timePeriod, DateTime startDate, DateTime endDate)
         {
             InitializeComponent();
 
@@ -33,7 +37,6 @@ namespace StockAnalyzer
             this.timePeriod = timePeriod;
             this.startDate = startDate;
             this.endDate = endDate;
-            this.highlightPattern = pattern;
 
             filePath = dataFolder + @"\" + tickerName; // Path to csv file
             try
@@ -46,6 +49,12 @@ namespace StockAnalyzer
                 this.file = null;
             }
             this.csReader = new CandlestickReader(startDate, endDate, filePath);
+
+            this.recognisers[Patterns.Doji] = new RecogniserDoji();
+            this.recognisers[Patterns.Hammer_bullish] = new RecogniserBullishHammer();
+            this.recognisers[Patterns.Hammer_bearish] = new RecogniserBearishHammer();
+            this.recognisers[Patterns.Marubozu_bullish] = new RecogniserBullishMarubozu();
+            this.recognisers[Patterns.Marubozu_bearish] = new RecogniserBearishMarubozu();
         }
 
         /// <summary>
@@ -74,15 +83,31 @@ namespace StockAnalyzer
             }
             else if (this.file != null)
             {
-                csReader.populateChart(chartStockDisplayWindow); // populates chartStockDisplay with values from stock csv file
+                visibleCandlesticks = csReader.populateChart(chartStockDisplayWindow); // populates chartStockDisplay with values from stock csv file
+                foreach (var pattern in recognisers.Keys)
+                {
+                    if (recognisers[pattern].returnIndices(visibleCandlesticks).Count() != 0)
+                    {
+                        comboBoxPatternHighlighted.Items.Add(recognisers[pattern].patternName);
+                        this.visiblePatterns[recognisers[pattern].patternName] = pattern;
+                    }
+                }
+
+                this.highlightPattern = visiblePatterns.Values.ToArray()[0];
             }
         }
 
+        /// <summary>
+        /// Function used in paint event to draw box over certain points given an index
+        /// </summary>
+        /// <param name="points"></param>
+        /// <param name="color"></param>
+        /// <param name="e"></param>
         void highlightPoints(List<int> points, Pen color, PaintEventArgs e)
         {
             foreach (int point in points)
             {
-                if (point >=0 && point < chartStockDisplayWindow.Series[0].Points.Count)
+                if (point >= 0 && point < chartStockDisplayWindow.Series[0].Points.Count)
                 {
                     DataPoint dp = chartStockDisplayWindow.Series[0].Points[point];
                     float x = (float)chartStockDisplayWindow.ChartAreas[0].AxisX.ValueToPixelPosition(dp.XValue);
@@ -97,27 +122,28 @@ namespace StockAnalyzer
         private void chartStockDisplayWindow_Paint(object sender, PaintEventArgs e)
         {
             List<int> points = new List<int>();
-            Pen color = Pens.Black;            
+            Pen color = Pens.Black;
             switch (this.highlightPattern)
             {
                 case Patterns.Doji:
-                    points = this.csReader.dojiIndex();
+                    points = recognisers[Patterns.Doji].returnIndices(visibleCandlesticks);
+                    color = Pens.Black;
                     break;
                 case Patterns.Marubozu_bearish:
-                    points = this.csReader.bearishMarubozuIndex();
+                    points = recognisers[Patterns.Marubozu_bearish].returnIndices(visibleCandlesticks);
                     color = Pens.Blue;
                     break;
                 case Patterns.Marubozu_bullish:
-                    points = this.csReader.bullishMarubozuIndex();
+                    points = recognisers[Patterns.Marubozu_bullish].returnIndices(visibleCandlesticks);
                     color = Pens.Red;
                     break;
                 case Patterns.Hammer_bullish:
-                    points = this.csReader.bullishHammerIndex();
+                    points = recognisers[Patterns.Hammer_bullish].returnIndices(visibleCandlesticks); ;
                     color = Pens.Green;
                     break;
                 case Patterns.Hammer_bearish:
-                    points = this.csReader.bearishHammerIndex();
-                    color= Pens.Magenta;
+                    points = recognisers[Patterns.Hammer_bearish].returnIndices(visibleCandlesticks);
+                    color = Pens.Magenta;
                     break;
             }
             //List<int> points = this.csReader.dojiIndex();
@@ -128,7 +154,18 @@ namespace StockAnalyzer
         {
 
         }
+
+        private void comboBoxPatternHighlighted_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            this.highlightPattern = visiblePatterns[comboBoxPatternHighlighted.Text];
+            this.Invalidate();
+            this.Update();
+            this.Refresh();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
-
-
 }

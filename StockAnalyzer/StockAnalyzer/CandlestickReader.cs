@@ -19,7 +19,7 @@ namespace StockAnalyzer
         DateTime startDate; // starting date from datetime selector
         DateTime endDate; // ending date from datetime selector
         FileInfo stockFile; // FileInfo object for csv stock file
-        List<Candlestick> candlesticks; // list of candlesticks
+        public List<Candlestick> candlesticks; // list of candlesticks
 
         decimal hammerThreshold = 0.3m;
         decimal dojiThreshold = 0.05m;
@@ -70,9 +70,9 @@ namespace StockAnalyzer
         /// <summary>
         /// Populates a chart with data from candlesticks list
         /// </summary>
-        public void populateChart(Chart chart)
+        public List<Candlestick> populateChart(Chart chart)
         {
-            ArrayList dataSource = new ArrayList();
+            List<Candlestick> dataSource = new List<Candlestick>();
 
             foreach (var candlestick in candlesticks)
             {
@@ -97,6 +97,7 @@ namespace StockAnalyzer
             }
 
             chart.ChartAreas[0].AxisY.IsStartedFromZero = false;
+            return dataSource;
         }
 
         /// <summary>
@@ -117,7 +118,7 @@ namespace StockAnalyzer
                 Decimal range = Math.Abs(cs.High - cs.Low);
 
                 // Check if the difference between open and close is less than the threshold
-                if (diff / range < dojiThreshold)
+                if (Math.Abs(diff / range) < dojiThreshold)
                 {
                     indices.Add(i);
                 }

@@ -163,10 +163,14 @@ namespace StockAnalyzer
         public RecogniserBullishHammer() : base("Bullish Hammer", 1) { }
         decimal hammerThreshold = 0.3m;
 
+        /// <summary>
+        /// Checks if given subset matches pattern of bullish hammer
+        /// </summary>
+        /// <param name="subset"></param>
+        /// <returns></returns>
         protected override bool isPatternMatch(List<Candlestick> subset)
         {
             var cs = subset[0];
-
             var bodyLength = Math.Abs(cs.Close - cs.Open);
             var upperWickLength = cs.High - Math.Max(cs.Close, cs.Open);
             var lowerWickLength = Math.Min(cs.Close, cs.Open) - cs.Low;
@@ -182,6 +186,51 @@ namespace StockAnalyzer
             if (bodyToTotalLengthRatio < hammerThreshold && upperWickLength <= bodyLength && lowerWickLength >= bodyLength)
             {
                 if (cs.Close > cs.Open && upperWickToLowerWickRatio < 0.3m)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    
+    internal class RecogniserBearishHammer : Recogniser
+    {
+        public RecogniserBearishHammer() : base("Bearish Hammer", 1) { }
+        decimal hammerThreshold = 0.3m;
+
+        /// <summary>
+        /// Checks if given subset matches pattern of bearish hammer
+        /// </summary>
+        /// <param name="subset"></param>
+        /// <returns></returns>
+        protected override bool isPatternMatch(List<Candlestick> subset)
+        {
+            var cs = subset[0];
+            var bodyLength = Math.Abs(cs.Close - cs.Open);
+            var upperWickLength = cs.High - Math.Max(cs.Close, cs.Open);
+            var lowerWickLength = Math.Min(cs.Close, cs.Open) - cs.Low;
+
+            if (lowerWickLength == 0)
+            {
+                return false;
+            }
+
+            var totalLength = bodyLength + upperWickLength + lowerWickLength;
+
+            var bodyToTotalLengthRatio = bodyLength / totalLength;
+            var upperWickToLowerWickRatio = upperWickLength / lowerWickLength;
+
+            if (bodyToTotalLengthRatio < hammerThreshold && upperWickLength <= bodyLength && lowerWickLength >= bodyLength)
+            {
+                if (cs.Close < cs.Open && upperWickToLowerWickRatio < 0.3m)
                 {
                     return true;
                 }

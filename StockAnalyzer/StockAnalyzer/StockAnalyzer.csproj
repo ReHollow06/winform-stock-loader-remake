@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Candlestick.cs" />
     <Compile Include="CandlestickReader.cs" />
+    <Compile Include="Recogniser.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
