@@ -93,7 +93,10 @@ namespace StockAnalyzer
                     }
                 }
 
-                this.highlightPattern = visiblePatterns.Values.ToArray()[0];
+                if (visiblePatterns.Values.ToArray().Count() != 0)
+                {
+                    this.highlightPattern = visiblePatterns.Values.ToArray()[0];
+                }
             }
         }
 
